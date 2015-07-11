@@ -8,6 +8,9 @@ class Cell
 public:
     Cell();
     ~Cell();
+    bool GetState() {
+        return _state;
+    }
     void CopyTo(Cell& c);
     bool IsStable();
     bool UpdateState(Matrix& m, int x, int y);

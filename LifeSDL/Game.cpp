@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "Game.h"
 
-const int SCREEN_WIDTH = 1000;
+const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = SCREEN_WIDTH;
 const int SCREEN_BPP = 32;
-const int CELLS_COUNT = 500;
-const int CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
+const int CELLS_COUNT = 512;
+const float CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
+const int FRAMES_PER_SECOND = 60;
 
 // Init
 // ====
@@ -43,6 +44,7 @@ int Game::Loop() {
         }
 
         _matrix->CopyTo(*_oldMatrix);
+        _window->PreRender();
         Step();
         _window->Flip();
     }
@@ -61,8 +63,9 @@ void Game::Step() {
             Cell& c = _oldMatrix->GetCell(x, y);
             if (!c.IsStable()) {
                 bool newState = c.UpdateState(*_matrix, x, y);
-                _window->Draw(x, y, newState);
+                //_window->Draw(x, y, newState);
             }
+            _window->Draw(x, y, c.GetState());
         }
     }
 }

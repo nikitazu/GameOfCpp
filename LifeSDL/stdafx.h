@@ -13,6 +13,9 @@
 #include <vector>
 
 #include "SDL.h"
+#include "SDL_opengl.h"
 
 #pragma comment(lib, "SDL.lib")
 #pragma comment(lib, "SDLmain.lib")
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "glu32.lib")

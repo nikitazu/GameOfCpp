@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "Cell.h"
 
+const int RANDOMNESS = 5;
+
 // Init
 // ====
 
 Cell::Cell() {
-    _state = (rand() % 10) == 0;
+    _state = (rand() % RANDOMNESS) == 0;
     _count = 0;
 }
 

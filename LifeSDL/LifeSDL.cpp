@@ -2,15 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "GameWindow.h"
-
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 768;
-const int SCREEN_BPP = 32;
+#include "Game.h"
 
 int _tmain(int argc, _TCHAR* argv[]) {
     try {
-        GameWindow game(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP);
+        Game game(10);
         return game.Loop();
     }
     catch (int error) {

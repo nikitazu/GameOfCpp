@@ -28,7 +28,7 @@ int GameWindow::Loop() {
     Canvas canvas(_width, _height, _bpp);
     SDL_Event event;
     bool quit = false;
-    
+
     while (!quit) {
         while (SDL_PollEvent(&event)) {
             quit = (event.type == SDL_QUIT || event.type == SDL_KEYDOWN);

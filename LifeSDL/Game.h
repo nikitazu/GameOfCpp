@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GameWindow.h"
-#include "Canvas.h"
 #include "Matrix.h"
 #include "Cell.h"
 
@@ -16,7 +15,7 @@ private:
     Matrix* _matrix;
     Matrix* _oldMatrix;
     GameWindow* _window;
-    Canvas* _canvas;
+
     bool Game::IsQuitEvent(SDL_Event& event);
     void Step();
 };

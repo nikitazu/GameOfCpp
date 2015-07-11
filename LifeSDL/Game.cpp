@@ -13,8 +13,7 @@ const int CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
 Game::Game() : _size(CELLS_COUNT) {
     _matrix = new Matrix(CELLS_COUNT);
     _oldMatrix = new Matrix(CELLS_COUNT);
-    _window = new GameWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP);
-    _canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
+    _window = new GameWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
 
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
@@ -62,7 +61,7 @@ void Game::Step() {
             Cell& c = _oldMatrix->GetCell(x, y);
             if (!c.IsStable()) {
                 bool newState = c.UpdateState(*_matrix, x, y);
-                _canvas->DrawOn(*_window, x, y, newState);
+                _window->Draw(x, y, newState);
             }
         }
     }

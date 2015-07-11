@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include "SDL.h"
 
-
-// TODO: reference additional headers your program requires here
+#pragma comment(lib, "SDL.lib")
+#pragma comment(lib, "SDLmain.lib")

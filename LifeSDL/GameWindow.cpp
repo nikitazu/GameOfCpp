@@ -18,6 +18,7 @@ GameWindow::GameWindow(int w, int h, int bpp) {
     }
 
     SDL_WM_SetCaption("Game of Life", NULL);
+    SDL_FillRect(_screen, NULL, SDL_MapRGB(_screen->format, 0xFF, 0xFF, 0xFF));
 }
 
 GameWindow::~GameWindow() {

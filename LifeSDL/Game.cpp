@@ -1,18 +1,26 @@
 #include "stdafx.h"
 #include "Game.h"
 
-const int SCREEN_WIDTH = 1024;
-const int SCREEN_HEIGHT = 768;
+const int SCREEN_WIDTH = 1000;
+const int SCREEN_HEIGHT = SCREEN_WIDTH;
 const int SCREEN_BPP = 32;
+const int CELLS_COUNT = 500;
+const int CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
 
 // Init
 // ====
 
-Game::Game(const int size) : _size(size) {
-    _matrix = new Matrix(size);
-    _oldMatrix = new Matrix(size);
+Game::Game() : _size(CELLS_COUNT) {
+    _matrix = new Matrix(CELLS_COUNT);
+    _oldMatrix = new Matrix(CELLS_COUNT);
     _window = new GameWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP);
-    _canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP);
+    _canvas = new Canvas(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
+
+    for (int x = 0; x < _size; x++) {
+        for (int y = 0; y < _size; y++) {
+            _matrix->GetCell(x, y).InitCounters(*_matrix, x, y);
+        }
+    }
 }
 
 
@@ -31,13 +39,12 @@ int Game::Loop() {
     bool quit = false;
 
     while (!quit) {
-        _matrix->CopyTo(*_oldMatrix);
-
         while (!quit && SDL_PollEvent(&event)) {
             quit = IsQuitEvent(event);
         }
 
-        _canvas->DrawOn(*_window);
+        _matrix->CopyTo(*_oldMatrix);
+        Step();
         _window->Flip();
     }
 
@@ -49,8 +56,16 @@ int Game::Loop() {
 // Private
 // =======
 
-void Step() {
-    // todo
+void Game::Step() {
+    for (int x = 0; x < _size; x++) {
+        for (int y = 0; y < _size; y++) {
+            Cell& c = _oldMatrix->GetCell(x, y);
+            if (!c.IsStable()) {
+                bool newState = c.UpdateState(*_matrix, x, y);
+                _canvas->DrawOn(*_window, x, y, newState);
+            }
+        }
+    }
 }
 
 bool Game::IsQuitEvent(SDL_Event& event) {

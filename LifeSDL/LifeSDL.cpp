@@ -6,7 +6,7 @@
 
 int _tmain(int argc, _TCHAR* argv[]) {
     try {
-        Game game(10);
+        Game game;
         return game.Loop();
     }
     catch (int error) {

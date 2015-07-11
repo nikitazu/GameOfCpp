@@ -5,7 +5,6 @@
 // ====
 
 Matrix::Matrix(int size) : _size(size) {
-    printf("mcr%d\n", _size);
     _items = new cells_matrix(_size);
     for (int x = 0; x < _size; x++) {
         std::vector<Cell>* v = new std::vector<Cell>(_size);
@@ -19,7 +18,6 @@ Matrix::Matrix(int size) : _size(size) {
 
 
 Matrix::~Matrix() {
-    printf("mde%d\n", _size);
     delete _items;
 }
 

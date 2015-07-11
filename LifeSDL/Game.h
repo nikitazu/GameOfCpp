@@ -8,7 +8,7 @@
 class Game
 {
 public:
-    Game(const int size);
+    Game();
     ~Game();
     int Loop();
 private:

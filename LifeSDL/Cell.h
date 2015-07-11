@@ -10,7 +10,8 @@ public:
     ~Cell();
     void CopyTo(Cell& c);
     bool IsStable();
-    bool UpdateState(Matrix& m, int x, int y, Cell& oldCell);
+    bool UpdateState(Matrix& m, int x, int y);
+    void InitCounters(Matrix& m, int x, int y);
 private:
     bool _state;
     int _count;

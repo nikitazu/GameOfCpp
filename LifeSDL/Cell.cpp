@@ -7,13 +7,10 @@
 Cell::Cell() {
     _state = (rand() % 10) == 0;
     _count = 0;
-    printf("ccr%c ", _state ? 'a' : 'd');
 }
 
 
 Cell::~Cell() {
-    // empty
-    printf("cde%c ", _state ? 'a' : 'd');
 }
 
 
@@ -27,16 +24,22 @@ void Cell::CopyTo(Cell& c) {
 
 
 bool Cell::IsStable() {
-    return _state && (_count == 2 || _count == 3)
-        || (!_state) && (_count == 3);
+    return (_state && (_count == 2 || _count == 3))
+        || ((!_state) && (_count != 3));
 }
 
 
-bool Cell::UpdateState(Matrix& m, int x, int y, Cell& oldCell) {
+bool Cell::UpdateState(Matrix& m, int x, int y) {
     Cell& c = m.GetCell(x, y);
-    c._state = !oldCell._state;
+    c._state = !_state;
     UpdateNearCounts(m, x, y, c._state ? 1 : -1);
     return c._state;
+}
+
+void Cell::InitCounters(Matrix& m, int x, int y) {
+    if (_state) {
+        UpdateNearCounts(m, x, y, 1);
+    }
 }
 
 

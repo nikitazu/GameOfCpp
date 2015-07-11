@@ -15,12 +15,13 @@ Canvas::~Canvas() {
 }
 
 
-void Canvas::DrawOn(SDL_Surface &screen) {
+void Canvas::DrawOn(GameWindow &window) {
+    SDL_Surface* screen = window.GetScreen();
     SDL_Rect rect;
     rect.x = 10;
     rect.y = 10;
     rect.w = 100;
     rect.h = 100;
-    SDL_FillRect(&screen, &screen.clip_rect, SDL_MapRGB(screen.format, 0xFF, 0xFF, 0xFF));
-    SDL_BlitSurface(_canvas, &rect, &screen, &rect);
+    SDL_FillRect(screen, &screen->clip_rect, SDL_MapRGB(screen->format, 0xFF, 0xFF, 0xFF));
+    SDL_BlitSurface(_canvas, &rect, screen, &rect);
 }

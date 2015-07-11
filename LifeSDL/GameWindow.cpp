@@ -24,23 +24,9 @@ GameWindow::~GameWindow() {
     SDL_Quit();
 }
 
-int GameWindow::Loop() {
-    Canvas canvas(_width, _height, _bpp);
-    SDL_Event event;
-    bool quit = false;
-
-    while (!quit) {
-        while (SDL_PollEvent(&event)) {
-            quit = (event.type == SDL_QUIT || event.type == SDL_KEYDOWN);
-        }
-
-        canvas.DrawOn(*_screen);
-
-        if (-1 == SDL_Flip(_screen)) {
-            printf("SDL flip screen failed\n");
-            throw EXIT_FAILURE;
-        }
+void GameWindow::Flip() {
+    if (-1 == SDL_Flip(_screen)) {
+        printf("SDL flip screen failed\n");
+        throw EXIT_FAILURE;
     }
-
-    return EXIT_SUCCESS;
 }

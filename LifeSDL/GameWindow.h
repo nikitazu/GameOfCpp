@@ -5,7 +5,10 @@ class GameWindow
 public:
     GameWindow(int w, int h, int bpp);
     ~GameWindow();
-    int Loop();
+    SDL_Surface* GetScreen() {
+        return _screen;
+    }
+    void Flip();
 private:
     int _width;
     int _height;

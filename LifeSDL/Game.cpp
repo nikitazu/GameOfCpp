@@ -4,9 +4,9 @@
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = SCREEN_WIDTH;
 const int SCREEN_BPP = 32;
-const int CELLS_COUNT = 512;
+const int CELLS_COUNT = 512/4;
 const float CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
-const int FRAMES_PER_SECOND = 60;
+const int FRAMES_PER_SECOND = 30;
 
 // Init
 // ====
@@ -37,16 +37,29 @@ Game::~Game() {
 int Game::Loop() {
     SDL_Event event;
     bool quit = false;
+    int frame = 0;
+    bool cap = true;
+    Timer fps;
 
     while (!quit) {
+        fps.Start();
+
         while (!quit && SDL_PollEvent(&event)) {
             quit = IsQuitEvent(event);
+            if (IsFpsToggleEvent(event)) {
+                cap = !cap;
+            }
         }
 
         _matrix->CopyTo(*_oldMatrix);
         _window->PreRender();
         Step();
         _window->Flip();
+
+        frame++;
+        if (cap && fps.GetTicks() < 1000 / FRAMES_PER_SECOND) {
+            SDL_Delay(1000 / FRAMES_PER_SECOND - fps.GetTicks());
+        }
     }
 
     return EXIT_SUCCESS;
@@ -70,7 +83,12 @@ void Game::Step() {
     }
 }
 
-bool Game::IsQuitEvent(SDL_Event& event) {
-    return event.type == SDL_QUIT || event.type == SDL_KEYDOWN;
+bool Game::IsQuitEvent(SDL_Event& e) {
+    return e.type == SDL_QUIT 
+        || e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE;
+}
+
+bool Game::IsFpsToggleEvent(SDL_Event& e) {
+    return e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_RETURN;
 }
 

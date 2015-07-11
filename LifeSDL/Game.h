@@ -3,6 +3,7 @@
 #include "GameWindow.h"
 #include "Matrix.h"
 #include "Cell.h"
+#include "Timer.h"
 
 class Game
 {
@@ -16,7 +17,8 @@ private:
     Matrix* _oldMatrix;
     GameWindow* _window;
 
-    bool Game::IsQuitEvent(SDL_Event& event);
+    bool IsQuitEvent(SDL_Event& e);
+    bool IsFpsToggleEvent(SDL_Event& e);
     void Step();
 };
 

@@ -10,18 +10,20 @@ int _tmain(int argc, _TCHAR* argv[])
 {
     SDL_Surface* screen = NULL;
 
-    if (!SDL_Init(SDL_INIT_EVENTTHREAD)) {
+    if (SDL_Init(SDL_INIT_EVENTTHREAD) == -1) {
         printf("SDL init failed\n");
+        return EXIT_FAILURE;
     }
 
     screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32, SDL_SWSURFACE);
     if (!screen) {
         printf("SDL set video mode failed\n");
+        return EXIT_FAILURE;
     }
 
     SDL_Delay(2000);
 
     SDL_Quit();
-    return 0;
+    return EXIT_SUCCESS;
 }
 

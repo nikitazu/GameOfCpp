@@ -108,7 +108,7 @@ inline void GameWindow::CellColor(bool state) {
         GLfloat c = (_brushSize - _brushIndex) / (GLfloat)_brushSize;
         _brush[_brushIndex].r = c * 1.5f;
         _brush[_brushIndex].g = c;
-        _brush[_brushIndex].b = c;
+        _brush[_brushIndex].b = c * 0.5f;
     }
     else {
         GLfloat c = _brushIndex / (GLfloat)_brushSize * 0.5f;
@@ -123,9 +123,9 @@ inline void GameWindow::CellColor2(bool state) {
         GLfloat c = (_brushSize - _brushIndex) / (GLfloat)_brushSize;
         _brush[_brushIndex].r = c;
         _brush[_brushIndex].g = c;
-        _brush[_brushIndex].b = c;
+        _brush[_brushIndex].b = c * 1.3f;
     } else {
-        GLfloat c = _brushIndex / (GLfloat)_brushSize;
+        GLfloat c = _brushIndex / (GLfloat)_brushSize * 0.3f;
         _brush[_brushIndex].r = c;
         _brush[_brushIndex].g = c;
         _brush[_brushIndex].b = c;

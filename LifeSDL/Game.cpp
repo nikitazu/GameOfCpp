@@ -58,8 +58,11 @@ void Game::FirstStep() {
     long i = 0;
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
-            _matrix->GetCell(x, y).InitCounters(*_matrix, x, y);
-            _brush->UpdateGeometry(i++, x, y, CELL_SIZE);
+            Cell& c = _matrix->GetCell(x, y);
+            c.InitCounters(*_matrix, x, y);
+            _brush->UpdateGeometry(i, x, y, CELL_SIZE);
+            _brush->UpdateColor(i, c.GetState());
+            i++;
         }
     }
 }
@@ -72,8 +75,8 @@ void Game::Step() {
             Cell& c = _oldMatrix->GetCell(x, y);
             if (!c.IsStable()) {
                 bool newState = c.UpdateState(*_matrix, x, y);
+                _brush->UpdateColor(i, newState);
             }
-            _brush->UpdateColor(i, c.GetState());
             i++;
         }
     }

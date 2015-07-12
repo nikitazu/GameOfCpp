@@ -89,6 +89,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Brush.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameWindow.h" />
@@ -98,6 +99,7 @@
     <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Brush.cpp" />
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameWindow.cpp" />

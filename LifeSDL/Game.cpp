@@ -5,7 +5,7 @@ const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = SCREEN_WIDTH;
 const int SCREEN_BPP = 32;
 const int CELLS_COUNT = 512/2;
-const float CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
+const GLfloat CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
 const int FRAMES_PER_SECOND = 30;
 
 // Init
@@ -16,6 +16,7 @@ Game::Game()
     _matrix = new Matrix(CELLS_COUNT);
     _oldMatrix = new Matrix(CELLS_COUNT);
     _window = new GameWindow(CELLS_COUNT, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
+    _brush = new Brush(CELLS_COUNT);
 
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
@@ -29,6 +30,7 @@ Game::~Game() {
     delete _matrix;
     delete _oldMatrix;
     delete _window;
+    delete _brush;
 }
 
 
@@ -41,6 +43,8 @@ int Game::Loop() {
     int frame = 0;
     bool cap = true;
     Timer fps;
+
+    FirstStep();
 
     while (!quit) {
         fps.Start();
@@ -55,7 +59,7 @@ int Game::Loop() {
         _matrix->CopyTo(*_oldMatrix);
         Step();
         _window->PreRender();
-        _window->Flip();
+        _window->Flip(*_brush);
 
         frame++;
         if (cap && fps.GetTicks() < 1000 / FRAMES_PER_SECOND) {
@@ -71,14 +75,24 @@ int Game::Loop() {
 // Private
 // =======
 
+void Game::FirstStep() {
+    long i = 0;
+    for (int x = 0; x < _size; x++) {
+        for (int y = 0; y < _size; y++) {
+            _brush->UpdateGeometry(i++, x, y, CELL_SIZE);
+        }
+    }
+}
+
 void Game::Step() {
+    long i = 0;
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
             Cell& c = _oldMatrix->GetCell(x, y);
             if (!c.IsStable()) {
                 bool newState = c.UpdateState(*_matrix, x, y);
             }
-            _window->Draw(x, y, c.GetState());
+            _brush->UpdateColor(i++, c.GetState());
         }
     }
 }

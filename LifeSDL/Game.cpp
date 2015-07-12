@@ -4,17 +4,18 @@
 const int SCREEN_WIDTH = 1024;
 const int SCREEN_HEIGHT = SCREEN_WIDTH;
 const int SCREEN_BPP = 32;
-const int CELLS_COUNT = 512/4;
+const int CELLS_COUNT = 512/2;
 const float CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
 const int FRAMES_PER_SECOND = 30;
 
 // Init
 // ====
 
-Game::Game() : _size(CELLS_COUNT) {
+Game::Game()
+    : _size(CELLS_COUNT) {
     _matrix = new Matrix(CELLS_COUNT);
     _oldMatrix = new Matrix(CELLS_COUNT);
-    _window = new GameWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
+    _window = new GameWindow(CELLS_COUNT, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
 
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
@@ -52,8 +53,8 @@ int Game::Loop() {
         }
 
         _matrix->CopyTo(*_oldMatrix);
-        _window->PreRender();
         Step();
+        _window->PreRender();
         _window->Flip();
 
         frame++;
@@ -71,14 +72,14 @@ int Game::Loop() {
 // =======
 
 void Game::Step() {
+    long idx = 0;
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
             Cell& c = _oldMatrix->GetCell(x, y);
             if (!c.IsStable()) {
                 bool newState = c.UpdateState(*_matrix, x, y);
-                //_window->Draw(x, y, newState);
             }
-            _window->Draw(x, y, c.GetState());
+            _window->Draw(x, y, c.GetState(), idx++);
         }
     }
 }

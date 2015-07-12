@@ -72,7 +72,7 @@ void GameWindow::Flip() {
     SDL_GL_SwapBuffers();
 }
 
-void GameWindow::Draw(int x, int y, bool state, long idx) {
+void GameWindow::Draw(int x, int y, bool state) {
     GLfloat x0 = x * _pixelSize;
     GLfloat y0 = y * _pixelSize;
     GLfloat x1 = x0 + _pixelSize;
@@ -80,22 +80,22 @@ void GameWindow::Draw(int x, int y, bool state, long idx) {
 
     _brush[_brushIndex].x = x0;
     _brush[_brushIndex].y = y0;
-    CellColor(state, idx);
+    CellColor(state);
     _brushIndex++;
 
     _brush[_brushIndex].x = x1;
     _brush[_brushIndex].y = y0;
-    CellColor(state, idx);
+    CellColor(state);
     _brushIndex++;
 
     _brush[_brushIndex].x = x1;
     _brush[_brushIndex].y = y1;
-    CellColor(state, idx);
+    CellColor(state);
     _brushIndex++;
 
     _brush[_brushIndex].x = x0;
     _brush[_brushIndex].y = y1;
-    CellColor2(state, idx);
+    CellColor2(state);
     _brushIndex++;
 
     if (_brushIndex >= _brushSize) {
@@ -103,33 +103,32 @@ void GameWindow::Draw(int x, int y, bool state, long idx) {
     }
 }
 
-inline void GameWindow::CellColor(bool state, long idx) {
+inline void GameWindow::CellColor(bool state) {
     if (state) {
-        GLfloat c = (GLfloat)idx / (GLfloat)_brushSize;
-
-        _brush[_brushIndex].r = c;// 0.4f;
-        _brush[_brushIndex].g = c;//0.3f;
-        _brush[_brushIndex].b = c;//0.0f;
-    } else {
-        GLfloat c = (GLfloat)_brushSize - (GLfloat)idx / (GLfloat)_brushSize;
-
-        _brush[_brushIndex].r = c;//0.0f;
-        _brush[_brushIndex].g = c;//0.0f;
-        _brush[_brushIndex].b = c;//0.0f;
+        GLfloat c = (_brushSize - _brushIndex) / (GLfloat)_brushSize;
+        _brush[_brushIndex].r = c * 1.5f;
+        _brush[_brushIndex].g = c;
+        _brush[_brushIndex].b = c;
+    }
+    else {
+        GLfloat c = _brushIndex / (GLfloat)_brushSize * 0.5f;
+        _brush[_brushIndex].r = c;
+        _brush[_brushIndex].g = c;
+        _brush[_brushIndex].b = c;
     }
 }
 
-inline void GameWindow::CellColor2(bool state, long idx) {
+inline void GameWindow::CellColor2(bool state) {
     if (state) {
-        GLfloat c = (GLfloat)idx / (GLfloat)_brushSize;
-        _brush[_brushIndex].r = c;// 0.7f;
-        _brush[_brushIndex].g = c;//0.6f;
-        _brush[_brushIndex].b = c;//0.3f;
+        GLfloat c = (_brushSize - _brushIndex) / (GLfloat)_brushSize;
+        _brush[_brushIndex].r = c;
+        _brush[_brushIndex].g = c;
+        _brush[_brushIndex].b = c;
     } else {
-        GLfloat c = (GLfloat)_brushSize - (GLfloat)idx / (GLfloat)_brushSize;
-        _brush[_brushIndex].r = c;//0.1f;
-        _brush[_brushIndex].g = c;//0.1f;
-        _brush[_brushIndex].b = 0.7f;
+        GLfloat c = _brushIndex / (GLfloat)_brushSize;
+        _brush[_brushIndex].r = c;
+        _brush[_brushIndex].g = c;
+        _brush[_brushIndex].b = c;
     }
 }
 

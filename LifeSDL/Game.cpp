@@ -72,14 +72,13 @@ int Game::Loop() {
 // =======
 
 void Game::Step() {
-    long idx = 0;
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {
             Cell& c = _oldMatrix->GetCell(x, y);
             if (!c.IsStable()) {
                 bool newState = c.UpdateState(*_matrix, x, y);
             }
-            _window->Draw(x, y, c.GetState(), idx++);
+            _window->Draw(x, y, c.GetState());
         }
     }
 }

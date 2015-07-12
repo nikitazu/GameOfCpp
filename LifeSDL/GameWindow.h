@@ -19,7 +19,7 @@ public:
     }
     void PreRender();
     void Flip();
-    void Draw(int x, int y, bool state, long idx);
+    void Draw(int x, int y, bool state);
 private:
     const int _size;
     int _width;
@@ -33,7 +33,7 @@ private:
     long _brushIndex;
     const long _brushSize;
 
-    inline void CellColor(bool state, long idx);
-    inline void CellColor2(bool state, long idx);
+    inline void CellColor(bool state);
+    inline void CellColor2(bool state);
 };
 

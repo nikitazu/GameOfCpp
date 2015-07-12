@@ -8,23 +8,13 @@ const int CELLS_COUNT = 512/2;
 const GLfloat CELL_SIZE = SCREEN_WIDTH / CELLS_COUNT;
 const int FRAMES_PER_SECOND = 30;
 
-// Init
-// ====
-
 Game::Game()
     : _size(CELLS_COUNT) {
     _matrix = new Matrix(CELLS_COUNT);
     _oldMatrix = new Matrix(CELLS_COUNT);
     _window = new GameWindow(CELLS_COUNT, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, CELL_SIZE);
     _brush = new Brush(CELLS_COUNT);
-
-    for (int x = 0; x < _size; x++) {
-        for (int y = 0; y < _size; y++) {
-            _matrix->GetCell(x, y).InitCounters(*_matrix, x, y);
-        }
-    }
 }
-
 
 Game::~Game() {
     delete _matrix;
@@ -32,10 +22,6 @@ Game::~Game() {
     delete _window;
     delete _brush;
 }
-
-
-// Public
-// ======
 
 int Game::Loop() {
     SDL_Event event;
@@ -66,14 +52,15 @@ int Game::Loop() {
     }
 
     return EXIT_SUCCESS;
-
 }
 
-
-// Private
-// =======
-
 void Game::FirstStep() {
+    for (int x = 0; x < _size; x++) {
+        for (int y = 0; y < _size; y++) {
+            _matrix->GetCell(x, y).InitCounters(*_matrix, x, y);
+        }
+    }
+
     long i = 0;
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {

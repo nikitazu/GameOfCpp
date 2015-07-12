@@ -56,10 +56,8 @@ int Game::Loop() {
             }
         }
 
-        _matrix->CopyTo(*_oldMatrix);
         Step();
-        _window->PreRender();
-        _window->Flip(*_brush);
+        _window->Render(*_brush);
 
         frame++;
         if (cap && fps.GetTicks() < 1000 / FRAMES_PER_SECOND) {
@@ -85,6 +83,7 @@ void Game::FirstStep() {
 }
 
 void Game::Step() {
+    _matrix->CopyTo(*_oldMatrix);
     long i = 0;
     for (int x = 0; x < _size; x++) {
         for (int y = 0; y < _size; y++) {

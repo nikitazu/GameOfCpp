@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include "GameWindow.h"
 
-// Init
-// ====
-
 GameWindow::GameWindow(int size, int w, int h, int bpp, float pixelSize)
     : _size(size) {
     _width = w;
@@ -44,15 +41,8 @@ GameWindow::~GameWindow() {
     SDL_Quit();
 }
 
-
-// Public
-// ======
-
-void GameWindow::PreRender() {
+void GameWindow::Render(Brush& brush) {
     glClear(GL_COLOR_BUFFER_BIT);
-}
-
-void GameWindow::Flip(Brush& brush) {
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
 

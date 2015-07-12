@@ -6,8 +6,7 @@ class GameWindow
 public:
     GameWindow(int size, int w, int h, int bpp, float pixelSize);
     ~GameWindow();
-    void PreRender();
-    void Flip(Brush& brush);
+    void Render(Brush& brush);
 private:
     const int _size;
     int _width;
